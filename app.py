@@ -14,6 +14,9 @@ CORS(app)
 
 
 class Video(Resource):
+    def get(self):
+        return "<h1>app is running</h1>"
+
     def post(self):
         url = json.loads(request.data)['url']
         cap = cv2.VideoCapture(url)
