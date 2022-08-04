@@ -32,7 +32,7 @@ class Video(Resource):
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image_lst.append(frame_rgb)
 
-            cv2.imshow('a', frame)
+            # cv2.imshow('a', frame)
             key = cv2.waitKey(1)
             if key == ord('q'):
                 break
