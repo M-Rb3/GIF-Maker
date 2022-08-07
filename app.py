@@ -19,6 +19,7 @@ class Video(Resource):
 
     def post(self):
         url = json.loads(request.data)['url']
+        print(url)
         cap = cv2.VideoCapture(url)
         image_lst = []
 
