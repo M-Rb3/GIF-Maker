@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_restful import Api, Resource
 from flask_cors import CORS
 import json
-
 # import the needed packages
 import imageio
 import base64
@@ -19,7 +18,6 @@ class Video(Resource):
 
     def post(self):
         url = json.loads(request.data)['url']
-        print(url)
         cap = cv2.VideoCapture(url)
         image_lst = []
 
@@ -33,7 +31,6 @@ class Video(Resource):
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image_lst.append(frame_rgb)
 
-            # cv2.imshow('a', frame)
             key = cv2.waitKey(1)
             if key == ord('q'):
                 break
@@ -43,10 +40,17 @@ class Video(Resource):
 
         # Convert to gif using the imageio.mimsave method
         # imageio.mimsave('video1.gif', image_lst)
+        # start_time = time.time()
+        # myclip = ImageSequenceClip(image_lst, fps=30)
+        # myclip.to_gif('myClip.gif', logger=None)
+        # print("--- %s seconds ---" % (time.time() - start_time))
+        start_time = time.time()
+
         gif_encoded = imageio.mimsave(
-            "<bytes>", image_lst, format='gif')
-        print(type(gif_encoded))
+            "<bytes>", image_lst, format='gif', fps=60)
+        print("--- %s seconds ---" % (time.time() - start_time))
         encoded_string = gif_encoded.decode("ISO-8859-1")
+
         # encoded_string = base64.b64encode(gif_encoded)
         # encoded_string = b'data:image/gif;base64,'+encoded_string
         # decoded_string = encoded_string.decode()
