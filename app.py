@@ -19,6 +19,7 @@ class Video(Resource):
     def post(self):
         url = json.loads(request.data)['url']
         cap = cv2.VideoCapture(url)
+        print(url[:50])
         image_lst = []
 
         while True:
@@ -37,7 +38,7 @@ class Video(Resource):
 
         cap.release()
         cv2.destroyAllWindows()
-
+        print(image_lst)
         # Convert to gif using the imageio.mimsave method
         # imageio.mimsave('video1.gif', image_lst)
         # start_time = time.time()
@@ -47,7 +48,7 @@ class Video(Resource):
         start_time = time.time()
 
         gif_encoded = imageio.mimsave(
-            "<bytes>", image_lst, format='gif', fps=60)
+            "<bytes>", image_lst, format='gif')
         print("--- %s seconds ---" % (time.time() - start_time))
         encoded_string = gif_encoded.decode("ISO-8859-1")
 
