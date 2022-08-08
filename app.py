@@ -43,7 +43,8 @@ class Video(Resource):
 
         # Convert to gif using the imageio.mimsave method
         # imageio.mimsave('video1.gif', image_lst)
-        gif_encoded = imageio.mimsave("<bytes>", image_lst, format='gif')
+        gif_encoded = imageio.mimsave(
+            "<bytes>", image_lst, format='gif', duration=2)
         print(type(gif_encoded))
         encoded_string = gif_encoded.decode("ISO-8859-1")
         # encoded_string = base64.b64encode(gif_encoded)
