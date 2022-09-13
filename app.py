@@ -35,6 +35,7 @@ class Video(Resource):
             image_lst.append(frame)
         video.release()
 
+        print(image_lst)
         frame_rgb = cv2.cvtColor(image_lst[0], cv2.COLOR_BGR2RGB)
         update_imgs = [frame_rgb]
         count = int(math.ceil(len(image_lst)/12))
