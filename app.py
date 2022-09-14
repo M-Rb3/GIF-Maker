@@ -58,14 +58,9 @@ class test(Resource):
 
     def post(self):
         url = json.loads(request.data)['url']
-        text = base64.b64encode(url.split(","))
-        print(text)
-        file = open("textTest.txt", "wb")
-        file.write(text)
-        file.close()
-
+        url = url.split(",")[1].encode()
         fh = open("video.mp4", "wb")
-        fh.write(base64.b64decode(text))
+        fh.write(base64.b64decode(url))
         fh.close()
 
 
