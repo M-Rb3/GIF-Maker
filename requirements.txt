@@ -18,3 +18,4 @@ Werkzeug==2.0.2
 wincertstore==0.2
 opencv-python-headless
 opencv-contrib-python
+numpy==1.22.0

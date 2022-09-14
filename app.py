@@ -7,6 +7,8 @@ import imageio
 import base64
 import cv2
 import math
+import numpy as np
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -57,15 +59,27 @@ class test(Resource):
         return "<h1>app is running</h1>"
 
     def post(self):
-        url = json.loads(request.data)['url']
-        url = url.split(",")[1].encode()
-        fh = open("video.mp4", "wb")
-        fh.write(base64.b64decode(url))
-        fh.close()
+        urls = json.loads(request.data)['urls']
+        duration = json.loads(request.data)['duration']
+        print(duration)
+        for i in range(0, len(urls)):
+            image_b64 = urls[i].split(",")[1]
+            binary = base64.b64decode(image_b64)
+            image = np.asarray(bytearray(binary))
+            image = cv2.imdecode(image, cv2.IMREAD_ANYCOLOR)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            urls[i] = image
+        images = []
+        for file_name in urls:
+            images.append(file_name)
+        gif_encoded = imageio.mimsave(
+            "<bytes>", images, format='gif')
+        encoded_string = gif_encoded.decode("ISO-8859-1")
+        return {"data": encoded_string}
 
 
 api.add_resource(Video, "/")
-api.add_resource(test, "/test")
+api.add_resource(test, "/gif")
 
 if __name__ == "__main__":
     app.run(debug=True)
