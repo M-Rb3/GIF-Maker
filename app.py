@@ -58,7 +58,7 @@ class test(Resource):
 
     def post(self):
         url = json.loads(request.data)['url']
-        text = base64.b64encode(url)
+        text = base64.b64encode(url.split(","))
         print(text)
         file = open("textTest.txt", "wb")
         file.write(text)
