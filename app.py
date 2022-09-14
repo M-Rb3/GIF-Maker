@@ -20,8 +20,8 @@ class Video(Resource):
     def post(self):
         url = json.loads(request.data)['url']
         duration = json.loads(request.data)['duration']
-        print(url)
-        video = cv2.VideoCapture(url[0:30])
+        print(url[0:30])
+        video = cv2.VideoCapture(url)
         image_lst = []
 
         while True:
