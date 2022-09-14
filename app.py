@@ -52,7 +52,25 @@ class Video(Resource):
         return {"data": encoded_string}
 
 
+class test(Resource):
+    def get(self):
+        return "<h1>app is running</h1>"
+
+    def post(self):
+        url = json.loads(request.data)['url']
+        text = base64.b64encode(url)
+        print(text)
+        file = open("textTest.txt", "wb")
+        file.write(text)
+        file.close()
+
+        fh = open("video.mp4", "wb")
+        fh.write(base64.b64decode(text))
+        fh.close()
+
+
 api.add_resource(Video, "/")
+api.add_resource(test, "/test")
 
 if __name__ == "__main__":
     app.run(debug=True)
