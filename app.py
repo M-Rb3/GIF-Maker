@@ -14,12 +14,14 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-
-class Video(Resource):
+class Test(Resource):
     def get(self):
-        return "<h1>app is running</h1>"
+        return "app is running"
 
+# Video to a GIF
+class Video(Resource):
     def post(self):
+        # base64 encoded Data URI
         url = json.loads(request.data)['url']
         duration = json.loads(request.data)['duration']
         print(url[0:30])
@@ -53,12 +55,10 @@ class Video(Resource):
 
         return {"data": encoded_string}
 
-
-class test(Resource):
-    def get(self):
-        return "<h1>app is running</h1>"
-
+# Image list to a GIF
+class Image(Resource):
     def post(self):
+        # List of image base64 encoded Data URI
         urls = json.loads(request.data)['urls']
         duration = json.loads(request.data)['duration']
         print(duration)
@@ -77,9 +77,9 @@ class test(Resource):
         encoded_string = gif_encoded.decode("ISO-8859-1")
         return {"data": encoded_string}
 
-
-api.add_resource(Video, "/")
-api.add_resource(test, "/gif")
+api.add_resource(Test, "/")
+api.add_resource(Video, "/video")
+api.add_resource(Image, "/images")
 
 if __name__ == "__main__":
     app.run(debug=True)
